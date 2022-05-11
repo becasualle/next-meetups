@@ -1,5 +1,6 @@
 import classes from "./MeetupDetail.module.css";
-const MeetupDetail = ({ image, title, address, description }) => {
+const MeetupDetail = ({ meetupData }) => {
+  const { id, address, description, image, title } = meetupData;
   return (
     <section className={classes.detail}>
       <img src={image} alt={title} />

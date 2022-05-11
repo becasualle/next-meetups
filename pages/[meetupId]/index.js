@@ -1,9 +1,7 @@
 import { useRouter } from "next/router";
 import MeetupDetail from "../../components/meetups/MeetupDetail";
-const MeetupDetails = (props) => {
-  // const router = useRouter();
-  // const meetupId = router.query.meetupId;
-  return <MeetupDetail image={props.meetupData.image} />;
+const MeetupDetails = ({ meetupData }) => {
+  return <MeetupDetail meetupData={meetupData} />;
 };
 
 export async function getStaticPaths() {
@@ -42,7 +40,7 @@ export async function getStaticProps(context) {
         id: meetupId,
         image:
           "https://images.unsplash.com/photo-1576085898323-218337e3e43c?ixlib: b-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
-        title: "A First Meetup",
+        title: "A First Meetup beaches!",
         address: "Some address 5, 12345 Some City",
         description: "The meetup description",
       },
