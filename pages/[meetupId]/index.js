@@ -16,7 +16,7 @@ const MeetupDetails = ({ meetupData }) => {
 
 export async function getStaticPaths() {
   const client = await MongoClient.connect(
-    "mongodb+srv://mnelyubin:1804@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority"
+    `mongodb+srv://${process.env.NEXT_PUBLIC_MONGO_LOGIN}:${process.env.NEXT_PUBLIC_MONGO_PASSWORD}@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority`
   );
   const db = client.db();
   const meetupsCollection = db.collection("meetups");
@@ -30,7 +30,7 @@ export async function getStaticPaths() {
 
   return {
     // false когда указали все пути (404 ошибка если пользователь введет что-то иное), true когда часть (будет пытаться сгенерировать page для нового id, динамически на сервере для входящего запроса)
-    fallback: false,
+    fallback: "blocking",
     // генерируем объект с параметрами, внутри которых указываем сегмент динамических id и конкретные id для которых делаем пре-генерацию страницы
     paths: meetupsIds.map((meetup) => ({
       params: {
@@ -45,7 +45,7 @@ export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
 
   const client = await MongoClient.connect(
-    "mongodb+srv://mnelyubin:1804@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority"
+    `mongodb+srv://${process.env.NEXT_PUBLIC_MONGO_LOGIN}:${process.env.NEXT_PUBLIC_MONGO_PASSWORD}@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority`
   );
   const db = client.db();
   const meetupsCollection = db.collection("meetups");

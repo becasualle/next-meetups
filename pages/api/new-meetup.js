@@ -5,10 +5,9 @@ import { MongoClient } from "mongodb";
 async function handler(req, res) {
   if (req.method === "POST") {
     const data = req.body;
-    // const { address, description, image, title } = data;
 
     const client = await MongoClient.connect(
-      "mongodb+srv://mnelyubin:1804@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority"
+      `mongodb+srv://${process.env.NEXT_PUBLIC_MONGO_LOGIN}:${process.env.NEXT_PUBLIC_MONGO_PASSWORD}@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority`
     );
     const db = client.db();
 

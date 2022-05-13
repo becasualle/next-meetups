@@ -23,7 +23,7 @@ export async function getStaticProps() {
   // run while building process and each time we revalidate
 
   const client = await MongoClient.connect(
-    "mongodb+srv://mnelyubin:1804@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority"
+    `mongodb+srv://${process.env.NEXT_PUBLIC_MONGO_LOGIN}:${process.env.NEXT_PUBLIC_MONGO_PASSWORD}@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority`
   );
   const db = client.db();
   const meetupsCollection = db.collection("meetups");
@@ -42,7 +42,7 @@ export async function getStaticProps() {
     props: {
       meetups: formattedMeetups,
     },
-    revalidate: 3600,
+    revalidate: 1,
   };
 }
 
