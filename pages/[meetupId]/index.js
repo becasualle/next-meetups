@@ -1,8 +1,17 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 import { MongoClient, ObjectId } from "mongodb";
 const MeetupDetails = ({ meetupData }) => {
-  return <MeetupDetail meetupData={meetupData} />;
+  return (
+    <>
+      <Head>
+        <title>{meetupData.title}</title>
+        <meta name="description" content={meetupData.description} />
+      </Head>
+      <MeetupDetail meetupData={meetupData} />
+    </>
+  );
 };
 
 export async function getStaticPaths() {
@@ -34,14 +43,12 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   // fetch data for a single meetup
   const meetupId = context.params.meetupId;
-  // console.log(meetupId);
 
   const client = await MongoClient.connect(
     "mongodb+srv://mnelyubin:1804@cluster0.yrunn.mongodb.net/meetups?retryWrites=true&w=majority"
   );
   const db = client.db();
   const meetupsCollection = db.collection("meetups");
-  // return only id field
   const meetup = await meetupsCollection.findOne({ _id: ObjectId(meetupId) });
   const formattedMeetup = { ...meetup, id: meetup._id.toString() };
   delete formattedMeetup._id;
